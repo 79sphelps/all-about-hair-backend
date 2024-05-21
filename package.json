@@ -4,30 +4,11 @@
   "license": "MIT",
   "main": "server.js",
   "scripts": {
-    "ng": "ng",
-    "start3": "concurrently \"npm run start2\" \"node server.js\"",
-    "start2": "ng serve",
-    "start_backup": "cross-env NODE_ENV=production node server.js",
-    "start_backup2": "concurrently \"npm run start2\" \"node server.js\"",
-    "start": "node server.js",
-    "build": "ng build",
-    "test": "mocha --timeout 10000 ./server/test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
+    "server": "node ./server.js",
+    "start": "cross-env NODE_ENV=production node ./server.js"
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^17.3.5",
-    "@angular/cli": "^17.3.5",
-    "@angular/common": "^17.3.5",
-    "@angular/compiler": "^17.3.5",
-    "@angular/compiler-cli": "^17.3.5",
-    "@angular/core": "^17.3.5",
-    "@angular/forms": "^17.3.5",
-    "@angular/http": "^7.2.16",
-    "@angular/platform-browser": "^17.3.5",
-    "@angular/platform-browser-dynamic": "^17.3.5",
-    "@angular/router": "^17.3.5",
     "@types/jquery": "^3.5.29",
     "auth0-js": "^9.24.1",
     "axios": "^1.6.8",
@@ -58,11 +39,8 @@
   },
   "engines": {
     "node": "20.12.2",
-    "npm": "~5.6.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^17.3.6",
-    "@angular/language-service": "^17.3.5",
     "@types/google.analytics": "0.0.46",
     "@types/jasmine": "^5.1.4",
     "@types/jasminewd2": "^2.0.13",
