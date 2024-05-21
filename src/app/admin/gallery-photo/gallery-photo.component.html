@@ -1,0 +1,46 @@
+<div class="container">
+  <!-- <div class="row" style="margin-left: 0px; margin-right: 0px;"> -->
+  <div>
+    <app-loading *ngIf="loading"></app-loading>
+
+    <ng-template [ngIf]="utils.isLoaded(loading)">
+      <h1 class="text-center">{{ pageTitle }}</h1>
+      <!-- Photo -->
+      <ng-template [ngIf]="photo">
+        <div class="card">
+          <!-- Photo tab navigation -->
+          <div class="card-header">
+            <ul class="nav nav-tabs card-header-tabs">
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  [routerLink]="[]"
+                  [queryParams]="{ tab: 'details' }"
+                  [ngClass]="{ active: utils.tabIs(tab, 'details') }"
+                  >Details</a
+                >
+              </li>
+              <!--
+              <li class="nav-item">
+                <a class="nav-link" [routerLink]="[]" [queryParams]="{ tab: 'rsvp' }" [ngClass]="{ 'active': utils.tabIs(tab, 'rsvp') }">RSVP</a>
+              </li>
+              -->
+            </ul>
+          </div>
+
+          <!-- Photo detail tab -->
+          <app-photo-detail
+            *ngIf="utils.tabIs(tab, 'details')"
+            [photo]="photo"
+          ></app-photo-detail>
+        </div>
+      </ng-template>
+
+      <!-- Error loading events -->
+      <p *ngIf="error" class="alert alert-danger">
+        <strong>Oops!</strong> There was an error retrieving information for
+        this photo.
+      </p>
+    </ng-template>
+  </div>
+</div>
