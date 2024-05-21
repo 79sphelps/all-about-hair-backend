@@ -5,8 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node index.js",
-    "server": "node index.js",
-    "build": "node index.js"
+    "server": "node index.js"
   },
   "heroku-postbuild": "ng build --prod",
   "private": true,
