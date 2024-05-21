@@ -1,11 +1,10 @@
 
 { 
     "version": 2, 
-    "rewrites": [
-        { "source": "/(.*)", "destination": "/" }
-    ],
-    "framework": null,
-	"installCommand": null,
-	"buildCommand": "",
-	"outputDirectory": "public"
+        "builds": [
+        {
+            "src": "server.js",
+            "use": "@vercel/node"
+        }
+    ]
 }
