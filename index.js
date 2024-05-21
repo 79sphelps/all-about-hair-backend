@@ -86,7 +86,8 @@ if (process.env.NODE_ENV !== "dev") {
 global.appRoot = path.resolve(__dirname);
 
 // require("./server/api")(app, config);
-require(path.join(appRoot, "/api"))(app, config);
+// require(path.join(appRoot, "/server/api"))(app, config);
+require(path.join(appRoot, "/api.js"))(app, config);
 
 // Pass routing to Angular app
 // Don't run in dev

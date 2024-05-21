@@ -1,11 +1,10 @@
-
-{
-    "version": 2,
-    "builds": [
-      { "src": "index.ts", "use": "@now/node", "config": { "maxLambdaSize": "15mb" } }
+{ 
+    "version": 2, 
+    "rewrites": [
+        { "source": "/(.*)", "destination": "/" }
     ],
-    "routes": [
-      { "src": "/static/(.*)", "dest": "/public/$1" },
-      { "src": "/(.*)", "dest": "/index.ts" }
-    ]
-  }
+    "framework": null,
+    "installCommand": null,
+    "buildCommand": "",
+    "outputDirectory": "public"
+}
