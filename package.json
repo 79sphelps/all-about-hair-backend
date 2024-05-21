@@ -9,7 +9,8 @@
     "start_backup2": "concurrently \"npm run start2\" \"node server.js\"",
     "start": "node server.js",
     "server": "node server.js",
-    "build": "ng build"
+    "build_backup": "ng build",
+    "build": "node server.js"
   },
   "heroku-postbuild": "ng build --prod",
   "private": true,
