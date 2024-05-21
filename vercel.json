@@ -2,15 +2,10 @@
 {
     "version": 2,
     "builds": [
-        {
-            "src": "./index.js",
-            "use": "@vercel/node"
-        }
+      { "src": "index.ts", "use": "@now/node", "config": { "maxLambdaSize": "15mb" } }
     ],
     "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "/"
-        }
+      { "src": "/static/(.*)", "dest": "/public/$1" },
+      { "src": "/(.*)", "dest": "/index.ts" }
     ]
-}
+  }
