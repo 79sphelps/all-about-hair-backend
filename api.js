@@ -46,43 +46,43 @@ module.exports = (app, config) => {
     res.send("API Works");
   });
 
-  require(appRoot + "/server/routes/contact.router")(
+  require(appRoot + "/routes/contact.router")(
     app,
     jwtCheck,
     adminCheck
   );
-  require(appRoot + "/server/routes/gallery.router")(
+  require(appRoot + "/routes/gallery.router")(
     app,
     jwtCheck,
     adminCheck
   );
-  require(appRoot + "/server/routes/homepage.router")(
+  require(appRoot + "/routes/homepage.router")(
     app,
     jwtCheck,
     adminCheck
   );
-  require(appRoot + "/server/routes/personel.router")(
+  require(appRoot + "/routes/personel.router")(
     app,
     jwtCheck,
     adminCheck
   );
-  require(appRoot + "/server/routes/services.router")(
+  require(appRoot + "/routes/services.router")(
     app,
     jwtCheck,
     adminCheck
   );
-  require(appRoot + "/server/routes/request.router")(
+  require(appRoot + "/routes/request.router")(
     app,
     jwtCheck,
     adminCheck
   );
-  require(appRoot + "/server/routes/appointment.router")(
+  require(appRoot + "/routes/appointment.router")(
     app,
     jwtCheck,
     adminCheck
   );
 
-  require(appRoot + "/server/routes/footer.router")(
+  require(appRoot + "/routes/footer.router")(
     app,
     jwtCheck,
     adminCheck

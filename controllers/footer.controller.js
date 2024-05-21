@@ -1,6 +1,6 @@
 "use strict";
 
-const config = require(appRoot + "/server/config");
+const config = require(appRoot + "/config");
 const mongoose = require("mongoose");
 mongoose.connect(
   config.MONGO_URI, {
@@ -8,7 +8,7 @@ mongoose.connect(
     useUnifiedTopology: true
   }
 );
-const Footer = require(appRoot + "/server/models/Footer");
+const Footer = require(appRoot + "/models/Footer");
 
 module.exports.getFooterInfo = function(req, res, next) {
   // Footer.find({}, (err, data) => {

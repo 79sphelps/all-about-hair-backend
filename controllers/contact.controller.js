@@ -1,6 +1,6 @@
 "use strict";
 
-const config = require(appRoot + "/server/config");
+const config = require(appRoot + "/config");
 const mongoose = require("mongoose");
 mongoose.connect(
   config.MONGO_URI, {
@@ -8,7 +8,7 @@ mongoose.connect(
     useUnifiedTopology: true
   }
 );
-const Contact = require(appRoot + "/server/models/Contact");
+const Contact = require(appRoot + "/models/Contact");
 
 module.exports.getContactInfo = function(req, res, next) {
   // Contact.find({}, (err, data) => {

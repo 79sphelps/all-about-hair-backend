@@ -4,16 +4,9 @@
   "license": "MIT",
   "main": "server.js",
   "scripts": {
-    "start3": "concurrently \"npm run start2\" \"node server.js\"",
-    "start2": "ng serve",
-    "start_backup": "cross-env NODE_ENV=production node server.js",
-    "start_backup2": "concurrently \"npm run start2\" \"node server.js\"",
-    "start": "node server.js",
-    "server": "node server.js",
-    "build": "ng build",
-    "test": "mocha --timeout 10000 ./server/test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
+    "start": "node index.js",
+    "server": "node index.js",
+    "build": "node index.js"
   },
   "heroku-postbuild": "ng build --prod",
   "private": true,

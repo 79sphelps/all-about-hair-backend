@@ -1,6 +1,6 @@
 "use strict";
 
-const ctrlContact = require(appRoot + "/server/controllers/contact.controller");
+const ctrlContact = require(appRoot + "/controllers/contact.controller");
 
 module.exports = (app, jwtCheck, adminCheck) => {
   app.get("/api/admin/contact", ctrlContact.getContactInfo);
