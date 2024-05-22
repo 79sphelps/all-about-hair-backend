@@ -74,7 +74,7 @@ app.set("port", port);
 // Don't run in dev
 if (process.env.NODE_ENV !== "dev") {
   //app.use("/", express.static(path.join("/dist/all-about-hair")));
-  // app.use("/", express.static(path.join(__dirname, "/dist")));
+  app.use("/", express.static(path.join(__dirname, "/dist")));
 }
 
 /*
@@ -94,7 +94,7 @@ require(path.join(appRoot, "/api.js"))(app, config);
 if (process.env.NODE_ENV !== "dev") {
   app.get("/*", function(req, res) {
     //res.sendFile(path.join("/dist/all-about-hair/index.html"));
-    // res.sendFile(path.join(__dirname, "/dist/index.html"));
+    res.sendFile(path.join(__dirname, "/dist/index.html"));
   });
 }
 
