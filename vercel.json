@@ -1,10 +1,14 @@
-{ 
-    "version": 2, 
-    "rewrites": [
-        { "source": "/(.*)", "destination": "/" }
+{
+    "builds": [
+      {
+        "src": "/index.js",
+        "use": "@vercel/node"
+      }
     ],
-    "framework": null,
-    "installCommand": null,
-    "buildCommand": "",
-    "outputDirectory": "public"
-}
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "/index.js"
+      }
+    ]
+  }
