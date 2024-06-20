@@ -83,26 +83,46 @@ module.exports.create = function(req, res, next) {
 };
 
 module.exports.update = (req, res, next) => {
-  Services.findById(req.params.id, (err, service) => {
-    if (err) {
-      return res.status(500).send({ message: err.message });
-    }
-    if (!service) {
-      return res.status(400).send({ message: "Service not found." });
-    }
+  const id = req.params.id;
 
-    service.title = req.body.title;
-    service.description = req.body.description;
-    service.image = req.body.image;
-    service.pricing = req.body.pricing;
-
-    service.save(err => {
-      if (err) {
-        return res.status(500).send({ message: err.message });
+  Services.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+    .then((data) => {
+      if (!data) {
+        res
+          .status(404)
+          .send({ message: `Cannot update Service with id=${id}. Not found.` });
+      } else {
+        res.status(200).send({ message: "Service was updated successfully." });
       }
-      res.send(service);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error updating Service with id=" + id,
+      });
     });
-  });
+
+
+
+  // Services.findById(req.params.id, (err, service) => {
+  //   if (err) {
+  //     return res.status(500).send({ message: err.message });
+  //   }
+  //   if (!service) {
+  //     return res.status(400).send({ message: "Service not found." });
+  //   }
+
+  //   service.title = req.body.title;
+  //   service.description = req.body.description;
+  //   service.image = req.body.image;
+  //   service.pricing = req.body.pricing;
+
+  //   service.save(err => {
+  //     if (err) {
+  //       return res.status(500).send({ message: err.message });
+  //     }
+  //     res.send(service);
+  //   });
+  // });
 };
 
 module.exports.delete = (req, res, next) => {

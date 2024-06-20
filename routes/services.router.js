@@ -10,8 +10,8 @@ module.exports = (app, jwtCheck, adminCheck) => {
   app.post("/api/admin/services", jwtCheck, adminCheck, ctrlServices.create);
   app.put(
     "/api/admin/services/update/:id",
-    jwtCheck,
-    adminCheck,
+    // jwtCheck,
+    // adminCheck,
     ctrlServices.update
   );
   app.delete(

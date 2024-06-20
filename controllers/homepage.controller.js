@@ -55,34 +55,52 @@ module.exports.getHomepageById = function(req, res, next) {
 };
 
 module.exports.update = (req, res, next) => {
-  Homepage.findById(req.params.id, (err, homepage) => {
-    if (err) {
-      return res.status(500).send({ message: err.message });
-    }
-    if (!homepage) {
-      return res.status(400).send({ message: "Homepage not found." });
-    }
+  const id = req.params.id;
 
-    homepage.headline = req.body.headline;
-    homepage.headlineSubMsg = req.body.headlineSubMsg;
-    homepage.servicesHeadline = req.body.servicesHeadline;
-    homepage.servicesSubMsg = req.body.servicesSubMsg;
-    homepage.aboutHeadline = req.body.aboutHeadline;
-    homepage.aboutSubMsg = req.body.aboutSubMsg;
-    homepage.aboutImage = req.body.aboutImage;
-    homepage.aboutVideoLink = req.body.aboutVideoLink;
-    homepage.stylistsHeadline = req.body.stylistsHeadline;
-    homepage.stylistsSubMsg = req.body.stylistsSubMsg;
-    homepage.serviceDetailsHeadline = req.body.serviceDetailsHeadline;
-    homepage.serviceDetailsSubMsg = req.body.serviceDetailsSubMsg;
-    homepage.contactHeadline = req.body.contactHeadline;
-    homepage.contactSubMsg = req.body.contactSubMsg;
-
-    homepage.save(err => {
-      if (err) {
-        return res.status(500).send({ message: err.message });
+  Homepage.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+    .then((data) => {
+      if (!data) {
+        res
+          .status(404)
+          .send({ message: `Cannot update Homepage with id=${id}. Not found.` });
+      } else {
+        res.status(200).send({ message: "Homepage was updated successfully." });
       }
-      res.send(homepage);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error updating Homepage with id=" + id,
+      });
     });
-  });
+
+  // Homepage.findById(req.params.id, (err, homepage) => {
+  //   if (err) {
+  //     return res.status(500).send({ message: err.message });
+  //   }
+  //   if (!homepage) {
+  //     return res.status(400).send({ message: "Homepage not found." });
+  //   }
+
+  //   homepage.headline = req.body.headline;
+  //   homepage.headlineSubMsg = req.body.headlineSubMsg;
+  //   homepage.servicesHeadline = req.body.servicesHeadline;
+  //   homepage.servicesSubMsg = req.body.servicesSubMsg;
+  //   homepage.aboutHeadline = req.body.aboutHeadline;
+  //   homepage.aboutSubMsg = req.body.aboutSubMsg;
+  //   homepage.aboutImage = req.body.aboutImage;
+  //   homepage.aboutVideoLink = req.body.aboutVideoLink;
+  //   homepage.stylistsHeadline = req.body.stylistsHeadline;
+  //   homepage.stylistsSubMsg = req.body.stylistsSubMsg;
+  //   homepage.serviceDetailsHeadline = req.body.serviceDetailsHeadline;
+  //   homepage.serviceDetailsSubMsg = req.body.serviceDetailsSubMsg;
+  //   homepage.contactHeadline = req.body.contactHeadline;
+  //   homepage.contactSubMsg = req.body.contactSubMsg;
+
+  //   homepage.save(err => {
+  //     if (err) {
+  //       return res.status(500).send({ message: err.message });
+  //     }
+  //     res.send(homepage);
+  //   });
+  // });
 };
