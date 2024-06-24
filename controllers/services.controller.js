@@ -56,30 +56,51 @@ module.exports.getServiceById = function(req, res, next) {
 };
 
 module.exports.create = function(req, res, next) {
-  Services.findOne({ title: req.body.title }, (err, existingService) => {
-    if (err) {
-      return res.status(500).send({ message: err.message });
-    }
-    if (existingService) {
-      return res
-        .status(409)
-        .send({ message: "You already have this service." });
-    }
+  if (!req.body.title) {
+    res.status(400).send({ message: "Content cannot be empty!" });
+    return;
+  }
 
-    const service = new Services({
-      title: req.body.title,
-      description: req.body.description,
-      image: req.body.image,
-      pricing: req.body.pricing
-    });
+  const service = new Services({
+    title: req.body.title,
+    description: req.body.description,
+    image: req.body.image,
+    pricing: req.body.pricing
+  });
 
-    service.save(err => {
-      if (err) {
-        return res.status(500).send({ message: err.message });
-      }
-      res.send(service);
+  service
+  .save(service)
+  .then((data) => res.status(201).send(data))
+  .catch((err) => {
+    res.status(500).send({
+      message: err.message || "Some error occurred while creating the service.",
     });
   });
+
+  // Services.findOne({ title: req.body.title }, (err, existingService) => {
+  //   if (err) {
+  //     return res.status(500).send({ message: err.message });
+  //   }
+  //   if (existingService) {
+  //     return res
+  //       .status(409)
+  //       .send({ message: "You already have this service." });
+  //   }
+
+  //   const service = new Services({
+  //     title: req.body.title,
+  //     description: req.body.description,
+  //     image: req.body.image,
+  //     pricing: req.body.pricing
+  //   });
+
+  //   service.save(err => {
+  //     if (err) {
+  //       return res.status(500).send({ message: err.message });
+  //     }
+  //     res.send(service);
+  //   });
+  // });
 };
 
 module.exports.update = (req, res, next) => {
@@ -100,8 +121,6 @@ module.exports.update = (req, res, next) => {
         message: "Error updating Service with id=" + id,
       });
     });
-
-
 
   // Services.findById(req.params.id, (err, service) => {
   //   if (err) {
@@ -126,20 +145,42 @@ module.exports.update = (req, res, next) => {
 };
 
 module.exports.delete = (req, res, next) => {
-  Services.findById(req.params.id, (err, service) => {
-    if (err) {
-      return res.status(500).send({ message: err.message });
-    }
-    if (!service) {
-      return res.status(400).send({ message: "Service not found." });
-    }
-    Services.find({ _id: req.params.id }, (err, services) => {
-      service.remove(err => {
-        if (err) {
-          return res.status(500).send({ message: err.message });
-        }
-        res.status(200).send({ message: "Service successfully deleted." });
-      });
+  if (!req.body) {
+    return res.status(400).send({ message: "Data to delete cannot be empty." });
+  }
+
+  const id = req.params.id;
+
+  // Services.findByIdAndRemove(id, { useFindAndModify: false })
+  Services.findByIdAndDelete(id, { useFindAndModify: false })
+    .then((data) => {
+      if (!data) {
+        res.status(404).send({
+          message: `Cannot delete service with id=${id}. Not found.`,
+        });
+      } else {
+        res.status(200).send({ message: "Service was deleted successfully" });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({ message: "Could not delete service with id=" + id });
     });
-  });
+
+
+  // Services.findById(req.params.id, (err, service) => {
+  //   if (err) {
+  //     return res.status(500).send({ message: err.message });
+  //   }
+  //   if (!service) {
+  //     return res.status(400).send({ message: "Service not found." });
+  //   }
+  //   Services.find({ _id: req.params.id }, (err, services) => {
+  //     service.remove(err => {
+  //       if (err) {
+  //         return res.status(500).send({ message: err.message });
+  //       }
+  //       res.status(200).send({ message: "Service successfully deleted." });
+  //     });
+  //   });
+  // });
 };

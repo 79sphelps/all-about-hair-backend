@@ -7,7 +7,8 @@ module.exports = (app, jwtCheck, adminCheck) => {
 
   // app.get("/api/admin/services/:id", jwtCheck, ctrlServices.getServiceById);
   app.get("/api/admin/services/:id", ctrlServices.getServiceById);
-  app.post("/api/admin/services", jwtCheck, adminCheck, ctrlServices.create);
+  // app.post("/api/admin/services", jwtCheck, adminCheck, ctrlServices.create);
+  app.post("/api/admin/services/new", ctrlServices.create);
   app.put(
     "/api/admin/services/update/:id",
     // jwtCheck,
@@ -16,8 +17,8 @@ module.exports = (app, jwtCheck, adminCheck) => {
   );
   app.delete(
     "/api/admin/services/:id",
-    jwtCheck,
-    adminCheck,
+    // jwtCheck,
+    // adminCheck,
     ctrlServices.delete
   );
 
