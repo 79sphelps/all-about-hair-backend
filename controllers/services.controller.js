@@ -2,15 +2,13 @@
 
 const config = require("../config");
 const mongoose = require("mongoose");
-mongoose.connect(
-  config.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  }
-);
+mongoose.connect(config.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 const Services = require("../models/Service");
 
-module.exports.getServices = function(req, res, next) {
+module.exports.getServices = function (req, res, next) {
   // Services.find({}, (err, data) => {
   //   let dataArr = [];
   //   if (err) {
@@ -26,19 +24,21 @@ module.exports.getServices = function(req, res, next) {
   // });
 
   Services.find({})
-  .then(data => {
-    let dataArr = [];
+    .then((data) => {
+      let dataArr = [];
       if (data) {
-        data.forEach(item => {
+        data.forEach((item) => {
           dataArr.push(item);
         });
       }
       res.send(dataArr);
-  })
-  .catch(err => { return res.status(500).send({ message: err.message })})
+    })
+    .catch((err) => {
+      return res.status(500).send({ message: err.message });
+    });
 };
 
-module.exports.getServiceById = function(req, res, next) {
+module.exports.getServiceById = function (req, res, next) {
   // Services.findById(req.params.id, (err, service) => {
   //   if (err) {
   //     return res.status(500).send({ message: err.message });
@@ -49,13 +49,15 @@ module.exports.getServiceById = function(req, res, next) {
   //   res.send(service);
   // });
   Services.findById(req.params.id)
-  .then(service => {
-    res.send(service);
-  })
-  .catch(err => { return res.status(500).send({ message: err.message })})
+    .then((service) => {
+      res.send(service);
+    })
+    .catch((err) => {
+      return res.status(500).send({ message: err.message });
+    });
 };
 
-module.exports.create = function(req, res, next) {
+module.exports.create = function (req, res, next) {
   if (!req.body.title) {
     res.status(400).send({ message: "Content cannot be empty!" });
     return;
@@ -65,17 +67,18 @@ module.exports.create = function(req, res, next) {
     title: req.body.title,
     description: req.body.description,
     image: req.body.image,
-    pricing: req.body.pricing
+    pricing: req.body.pricing,
   });
 
   service
-  .save(service)
-  .then((data) => res.status(201).send(data))
-  .catch((err) => {
-    res.status(500).send({
-      message: err.message || "Some error occurred while creating the service.",
+    .save(service)
+    .then((data) => res.status(201).send(data))
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while creating the service.",
+      });
     });
-  });
 
   // Services.findOne({ title: req.body.title }, (err, existingService) => {
   //   if (err) {
@@ -163,9 +166,10 @@ module.exports.delete = (req, res, next) => {
       }
     })
     .catch((err) => {
-      res.status(500).send({ message: "Could not delete service with id=" + id });
+      res
+        .status(500)
+        .send({ message: "Could not delete service with id=" + id });
     });
-
 
   // Services.findById(req.params.id, (err, service) => {
   //   if (err) {
