@@ -55,30 +55,59 @@ module.exports.getRequestById = function(req, res, next) {
 };
 
 module.exports.create = function(req, res, next) {
-  Request.findOne({ name: req.body.name }, (err, existingRequest) => {
-    if (err) {
-      return res.status(500).send({ message: err.message });
-    }
-    if (existingRequest) {
-      return res
-        .status(409)
-        .send({ message: "This request is already listed in your database." });
-    }
+  if (!req.body.firstName) {
+    res.status(400).send({ message: "Content cannot be empty!" });
+    return;
+  }
 
-    const request = new Request({
-      name: req.body.name,
-      email: req.body.email,
-      message: req.body.message,
-      category: req.body.category
-    });
+  // const request = new Request({
+  //   name: req.body.name,
+  //   email: req.body.email,
+  //   message: req.body.message,
+  //   category: req.body.category
+  // });
+  const request = new Request({
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    message: req.body.message,
+    phone: req.body.phone
+  });
 
-    request.save(err => {
-      if (err) {
-        return res.status(500).send({ message: err.message });
-      }
-      res.send(request);
+  request
+  .save(request)
+  .then((data) => res.status(201).send(data))
+  .catch((err) => {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while creating the service.",
     });
   });
+
+  // Request.findOne({ name: req.body.name }, (err, existingRequest) => {
+  //   if (err) {
+  //     return res.status(500).send({ message: err.message });
+  //   }
+  //   if (existingRequest) {
+  //     return res
+  //       .status(409)
+  //       .send({ message: "This request is already listed in your database." });
+  //   }
+
+  //   const request = new Request({
+  //     name: req.body.name,
+  //     email: req.body.email,
+  //     message: req.body.message,
+  //     category: req.body.category
+  //   });
+
+  //   request.save(err => {
+  //     if (err) {
+  //       return res.status(500).send({ message: err.message });
+  //     }
+  //     res.send(request);
+  //   });
+  // });
 };
 
 module.exports.update = (req, res, next) => {
@@ -94,8 +123,6 @@ module.exports.update = (req, res, next) => {
     request.email = req.body.email;
     request.message = req.body.message;
     request.category = req.body.category;
-    //request.date = req.body.date;
-    //request.date = new Date();
 
     request.save(err => {
       if (err) {
