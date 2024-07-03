@@ -2,6 +2,7 @@
 
 const config = require("../config");
 const mongoose = require("mongoose");
+
 mongoose.connect(
   config.MONGO_URI, {
     useNewUrlParser: true,
@@ -11,19 +12,6 @@ mongoose.connect(
 const Request = require("../models/Request");
 
 module.exports.getRequests = function(req, res, next) {
-  // Request.find({}, (err, data) => {
-  //   let dataArr = [];
-  //   if (err) {
-  //     return res.status(500).send({ message: err.message });
-  //   }
-
-  //   if (data) {
-  //     data.forEach(item => {
-  //       dataArr.push(item);
-  //     });
-  //   }
-  //   res.send(dataArr);
-  // });
   Request.find({})
   .then(data => {
     let dataArr = [];
@@ -38,15 +26,6 @@ module.exports.getRequests = function(req, res, next) {
 };
 
 module.exports.getRequestById = function(req, res, next) {
-  // Request.findById(req.params.id, (err, request) => {
-  //   if (err) {
-  //     return res.status(500).send({ message: err.message });
-  //   }
-  //   if (!request) {
-  //     return res.status(400).send({ message: "Request not found." });
-  //   }
-  //   res.send(request);
-  // });
   Request.findById(req.params.id)
   .then(service => {
     res.send(service);
@@ -83,31 +62,6 @@ module.exports.create = function(req, res, next) {
         err.message || "Some error occurred while creating the service.",
     });
   });
-
-  // Request.findOne({ name: req.body.name }, (err, existingRequest) => {
-  //   if (err) {
-  //     return res.status(500).send({ message: err.message });
-  //   }
-  //   if (existingRequest) {
-  //     return res
-  //       .status(409)
-  //       .send({ message: "This request is already listed in your database." });
-  //   }
-
-  //   const request = new Request({
-  //     name: req.body.name,
-  //     email: req.body.email,
-  //     message: req.body.message,
-  //     category: req.body.category
-  //   });
-
-  //   request.save(err => {
-  //     if (err) {
-  //       return res.status(500).send({ message: err.message });
-  //     }
-  //     res.send(request);
-  //   });
-  // });
 };
 
 module.exports.update = (req, res, next) => {

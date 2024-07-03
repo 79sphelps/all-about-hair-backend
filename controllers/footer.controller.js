@@ -2,39 +2,26 @@
 
 const config = require(appRoot + "/config");
 const mongoose = require("mongoose");
-mongoose.connect(
-  config.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  }
-);
+mongoose.connect(config.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 const Footer = require(appRoot + "/models/Footer");
 
-module.exports.getFooterInfo = function(req, res, next) {
-  // Footer.find({}, (err, data) => {
-  //   let dataArr = [];
-  //   if (err) {
-  //     return res.status(500).send({ message: err.message });
-  //   }
-
-  //   if (data) {
-  //     data.forEach(item => {
-  //       dataArr.push(item);
-  //     });
-  //   }
-  //   res.send(dataArr);
-  // });
+module.exports.getFooterInfo = function (req, res, next) {
   Footer.find({})
-  .then(data => {
-    let dataArr = [];
+    .then((data) => {
+      let dataArr = [];
       if (data) {
-        data.forEach(item => {
+        data.forEach((item) => {
           dataArr.push(item);
         });
       }
       res.send(dataArr);
-  })
-  .catch(err => { return res.status(500).send({ message: err.message })})
+    })
+    .catch((err) => {
+      return res.status(500).send({ message: err.message });
+    });
 };
 
 // module.exports.getFooterInfoById = function(req, res, next) {
@@ -50,7 +37,7 @@ module.exports.getFooterInfo = function(req, res, next) {
 // };
 
 module.exports.update = (req, res, next) => {
-    Footer.findById(req.params.id, (err, info) => {
+  Footer.findById(req.params.id, (err, info) => {
     if (err) {
       return res.status(500).send({ message: err.message });
     }
@@ -64,7 +51,7 @@ module.exports.update = (req, res, next) => {
     // info.hours = req.body.hours;
     info.aboutMsg = req.body.aboutMsg;
 
-    info.save(err => {
+    info.save((err) => {
       if (err) {
         return res.status(500).send({ message: err.message });
       }

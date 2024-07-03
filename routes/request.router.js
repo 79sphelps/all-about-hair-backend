@@ -19,17 +19,4 @@ module.exports = (app, jwtCheck, adminCheck) => {
     adminCheck,
     ctrlRequests.delete
   );
-
-  /*
-  app.get("/api/admin/requests/:id", ctrlRequests.getRequestById);
-  app.post("/api/requests/new", ctrlRequests.create);
-  app.put(
-    "/api/admin/requests/update/:id",
-    ctrlRequests.update
-  );
-  app.delete(
-    "/api/admin/requests/:id",
-    ctrlRequests.delete
-  );
-  */
 };

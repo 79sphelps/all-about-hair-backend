@@ -2,66 +2,46 @@
 
 const config = require("../config");
 const mongoose = require("mongoose");
-mongoose.connect(
-  config.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  }
-);
+mongoose.connect(config.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 const Appointments = require("../models/Appointments");
 
-module.exports.getAppointments = function(req, res, next) {
-  // Appointments.find({}, (err, data) => {
-  //   let dataArr = [];
-  //   if (err) {
-  //     return res.status(500).send({ message: err.message });
-  //   }
-
-  //   if (data) {
-  //     data.forEach(item => {
-  //       dataArr.push(item);
-  //     });
-  //   }
-  //   res.send(dataArr);
-  // });
+module.exports.getAppointments = function (req, res, next) {
   Appointments.find({})
-  .then(data => {
-    let dataArr = [];
+    .then((data) => {
+      let dataArr = [];
       if (data) {
-        data.forEach(item => {
+        data.forEach((item) => {
           dataArr.push(item);
         });
       }
       res.send(dataArr);
-  })
-  .catch(err => { return res.status(500).send({ message: err.message })})
+    })
+    .catch((err) => {
+      return res.status(500).send({ message: err.message });
+    });
 };
 
-module.exports.getAppointmentById = function(req, res, next) {
-  // Appointments.findById(req.params.id, (err, appt) => {
-  //   if (err) {
-  //     return res.status(500).send({ message: err.message });
-  //   }
-  //   if (!appt) {
-  //     return res.status(400).send({ message: "Appointment not found." });
-  //   }
-  //   res.send(appt);
-  // });
+module.exports.getAppointmentById = function (req, res, next) {
   Appointments.findById(req.params.id)
-  .then(service => {
-    res.send(service);
-  })
-  .catch(err => { return res.status(500).send({ message: err.message })})
+    .then((service) => {
+      res.send(service);
+    })
+    .catch((err) => {
+      return res.status(500).send({ message: err.message });
+    });
 };
 
-module.exports.create = function(req, res, next) {
+module.exports.create = function (req, res, next) {
   Appointments.findOne({ name: req.body.name }, (err, existingAppointment) => {
     if (err) {
       return res.status(500).send({ message: err.message });
     }
     if (existingAppointment) {
       return res.status(409).send({
-        message: "This appointment is already listed in your database."
+        message: "This appointment is already listed in your database.",
       });
     }
 
@@ -69,10 +49,10 @@ module.exports.create = function(req, res, next) {
       name: req.body.name,
       email: req.body.email,
       category: req.body.category,
-      message: req.body.message
+      message: req.body.message,
     });
 
-    appt.save(err => {
+    appt.save((err) => {
       if (err) {
         return res.status(500).send({ message: err.message });
       }
@@ -95,7 +75,7 @@ module.exports.update = (req, res, next) => {
     appt.category = req.body.category;
     appt.message = req.body.message;
 
-    appt.save(err => {
+    appt.save((err) => {
       if (err) {
         return res.status(500).send({ message: err.message });
       }
@@ -113,7 +93,7 @@ module.exports.destroy = (req, res, next) => {
       return res.status(400).send({ message: "Appointment not found." });
     }
     Appointments.find({ _id: req.params.id }, (err, appts) => {
-      appt.remove(err => {
+      appt.remove((err) => {
         if (err) {
           return res.status(500).send({ message: err.message });
         }

@@ -2,59 +2,40 @@
 
 const config = require("../config");
 const mongoose = require("mongoose");
-mongoose.connect(
-  config.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  }
-);
+
+mongoose.connect(config.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 const Gallery = require("../models/Gallery");
 
-module.exports.getGallery = function(req, res, next) {
-  // Gallery.find({}, (err, data) => {
-  //   let dataArr = [];
-  //   if (err) {
-  //     return res.status(500).send({ message: err.message });
-  //   }
-
-  //   if (data) {
-  //     data.forEach(item => {
-  //       dataArr.push(item);
-  //     });
-  //   }
-  //   res.send(dataArr);
-  // });
+module.exports.getGallery = function (req, res, next) {
   Gallery.find({})
-    .then(data => {
+    .then((data) => {
       let dataArr = [];
-        if (data) {
-          data.forEach(item => {
-            dataArr.push(item);
-          });
-        }
-        res.send(dataArr);
+      if (data) {
+        data.forEach((item) => {
+          dataArr.push(item);
+        });
+      }
+      res.send(dataArr);
     })
-    .catch(err => { return res.status(500).send({ message: err.message })})
+    .catch((err) => {
+      return res.status(500).send({ message: err.message });
+    });
 };
 
-module.exports.getGalleryPhotoById = function(req, res, next) {
-  // Gallery.findById(req.params.id, (err, photo) => {
-  //   if (err) {
-  //     return res.status(500).send({ message: err.message });
-  //   }
-  //   if (!photo) {
-  //     return res.status(400).send({ message: "Photo not found." });
-  //   }
-  //   res.send(photo);
-  // });
+module.exports.getGalleryPhotoById = function (req, res, next) {
   Gallery.findById(req.params.id)
-  .then(service => {
-    res.send(service);
-  })
-  .catch(err => { return res.status(500).send({ message: err.message })})
+    .then((service) => {
+      res.send(service);
+    })
+    .catch((err) => {
+      return res.status(500).send({ message: err.message });
+    });
 };
 
-module.exports.create = function(req, res, next) {
+module.exports.create = function (req, res, next) {
   Gallery.findOne({ path: req.body.path }, (err, existingPhoto) => {
     if (err) {
       return res.status(500).send({ message: err.message });
@@ -65,10 +46,10 @@ module.exports.create = function(req, res, next) {
 
     const gallery = new Gallery({
       path: req.body.path,
-      caption: req.body.caption
+      caption: req.body.caption,
     });
 
-    gallery.save(err => {
+    gallery.save((err) => {
       if (err) {
         return res.status(500).send({ message: err.message });
       }
@@ -89,7 +70,7 @@ module.exports.update = (req, res, next) => {
     photo.path = req.body.path;
     photo.caption = req.body.caption;
 
-    photo.save(err => {
+    photo.save((err) => {
       if (err) {
         return res.status(500).send({ message: err.message });
       }
@@ -107,7 +88,7 @@ module.exports.delete = (req, res, next) => {
       return res.status(400).send({ message: "Photo not found." });
     }
     Gallery.find({ _id: req.params.id }, (err, photos) => {
-      photo.remove(err => {
+      photo.remove((err) => {
         if (err) {
           return res.status(500).send({ message: err.message });
         }

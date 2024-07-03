@@ -4,7 +4,6 @@ const ctrlPersonel = require("../controllers/personel.controller");
 
 module.exports = (app, jwtCheck, adminCheck) => {
   app.get("/api/admin/personel", ctrlPersonel.getPersonel);
-
   app.get(
     "/api/admin/personel/:id", 
     // jwtCheck, 

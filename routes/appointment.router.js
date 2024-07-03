@@ -25,20 +25,4 @@ module.exports = (app, jwtCheck, adminCheck) => {
     adminCheck,
     ctrlAppointments.destroy
   );
-
-  /*
-  app.get(
-    "/api/admin/appointments/:id",
-    ctrlAppointments.getAppointmentById
-  );
-  app.post("/api/appointments/new", ctrlAppointments.create);
-  app.put(
-    "/api/admin/appointments/update/:id",
-    ctrlAppointments.update
-  );
-  app.delete(
-    "/api/admin/appointments/:id",
-    ctrlAppointments.destroy
-  );
-  */
 };

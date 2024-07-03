@@ -2,55 +2,36 @@
 
 const config = require(appRoot + "/config");
 const mongoose = require("mongoose");
-mongoose.connect(
-  config.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  }
-);
+mongoose.connect(config.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 const Contact = require(appRoot + "/models/Contact");
 
-module.exports.getContactInfo = function(req, res, next) {
-  // Contact.find({}, (err, data) => {
-  //   let dataArr = [];
-  //   if (err) {
-  //     return res.status(500).send({ message: err.message });
-  //   }
-  //   if (data) {
-  //     data.forEach(item => {
-  //       dataArr.push(item);
-  //     });
-  //   }
-  //   res.send(dataArr);
-  // });
+module.exports.getContactInfo = function (req, res, next) {
   Contact.find({})
-  .then(data => {
-    let dataArr = [];
+    .then((data) => {
+      let dataArr = [];
       if (data) {
-        data.forEach(item => {
+        data.forEach((item) => {
           dataArr.push(item);
         });
       }
       res.send(dataArr);
-  })
-  .catch(err => { return res.status(500).send({ message: err.message })})
+    })
+    .catch((err) => {
+      return res.status(500).send({ message: err.message });
+    });
 };
 
-module.exports.getContactInfoById = function(req, res, next) {
-  // Contact.findById(req.params.id, (err, info) => {
-  //   if (err) {
-  //     return res.status(500).send({ message: err.message });
-  //   }
-  //   if (!info) {
-  //     return res.status(400).send({ message: "Info not found." });
-  //   }
-  //   res.send(info);
-  // });
+module.exports.getContactInfoById = function (req, res, next) {
   Contact.findById(req.params.id)
-  .then(service => {
-    res.send(service);
-  })
-  .catch(err => { return res.status(500).send({ message: err.message })})
+    .then((service) => {
+      res.send(service);
+    })
+    .catch((err) => {
+      return res.status(500).send({ message: err.message });
+    });
 };
 
 module.exports.update = (req, res, next) => {
@@ -67,7 +48,7 @@ module.exports.update = (req, res, next) => {
     info.email = req.body.email;
     info.hours = req.body.hours;
 
-    info.save(err => {
+    info.save((err) => {
       if (err) {
         return res.status(500).send({ message: err.message });
       }
