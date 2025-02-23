@@ -1,13 +1,13 @@
 "use strict";
 
-const config = require("../config");
 const mongoose = require("mongoose");
+const config = require("../config");
+const Gallery = require("../models/Gallery");
 
 mongoose.connect(config.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-const Gallery = require("../models/Gallery");
 
 module.exports.getGallery = function (req, res, next) {
   Gallery.find({})

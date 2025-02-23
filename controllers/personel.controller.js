@@ -1,12 +1,13 @@
 "use strict";
 
-const config = require("../config");
 const mongoose = require("mongoose");
+const config = require("../config");
+const Personel = require("../models/Personel");
+
 mongoose.connect(config.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-const Personel = require("../models/Personel");
 
 module.exports.getPersonel = function (req, res, next) {
   Personel.find({})
@@ -83,6 +84,8 @@ module.exports.update = (req, res, next) => {
 };
 
 module.exports.delete = (req, res, next) => {
+  const id = req.params.id;
+
   Personel.findByIdAndDelete(id, { useFindAndModify: false })
     .then((data) => {
       if (!data) {

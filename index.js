@@ -15,6 +15,9 @@ const methodOverride = require("method-override");
 const cors = require("cors");
 var compression = require('compression');
 
+const dotenv = require("dotenv");
+dotenv.config();
+
 /* for HTTP/2 --> currently not able to get content from client side?? need more digging
 const spdy = require('spdy')
 const fs = require('fs')

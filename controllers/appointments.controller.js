@@ -1,12 +1,13 @@
 "use strict";
 
-const config = require("../config");
 const mongoose = require("mongoose");
+const config = require("../config");
+const Appointments = require("../models/Appointments");
+
 mongoose.connect(config.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-const Appointments = require("../models/Appointments");
 
 module.exports.getAppointments = function (req, res, next) {
   Appointments.find({})

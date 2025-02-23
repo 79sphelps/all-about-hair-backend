@@ -5,11 +5,9 @@
  | Dependencies
  |--------------------------------------
  */
-// const jwt = require("express-jwt");
-const { expressjwt: jwt } = require("express-jwt");
+const { expressjwt: jwt } = require("express-jwt"); // const jwt = require("express-jwt");
 // const jwt2 = require("jsonwebtoken");
 const jwks = require("jwks-rsa");
-
 
 /*
  |--------------------------------------

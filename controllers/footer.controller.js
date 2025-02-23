@@ -1,12 +1,13 @@
 "use strict";
 
-const config = require(appRoot + "/config");
 const mongoose = require("mongoose");
+const config = require(appRoot + "/config");
+const Footer = require(appRoot + "/models/Footer");
+
 mongoose.connect(config.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-const Footer = require(appRoot + "/models/Footer");
 
 module.exports.getFooterInfo = function (req, res, next) {
   Footer.find({})

@@ -1,7 +1,8 @@
 "use strict";
 
-const config = require("../config");
 const mongoose = require("mongoose");
+const config = require("../config");
+const Request = require("../models/Request");
 
 mongoose.connect(
   config.MONGO_URI, {
@@ -9,7 +10,6 @@ mongoose.connect(
     useUnifiedTopology: true
   }
 );
-const Request = require("../models/Request");
 
 module.exports.getRequests = function(req, res, next) {
   Request.find({})

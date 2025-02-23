@@ -1,12 +1,13 @@
 "use strict";
 
-const config = require("../config");
 const mongoose = require("mongoose");
+const config = require("../config");
+const Homepage = require("../models/Homepage");
+
 mongoose.connect(config.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-const Homepage = require("../models/Homepage");
 
 module.exports.getHomepage = function (req, res, next) {
   Homepage.find({})
